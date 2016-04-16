@@ -25,16 +25,26 @@ class BasketManager
         return static::$instance;
     }
 
-    public function addBasket(IBasket $basket, $isUserBasket = false){
+    public function addBasket(Basket $basket, $isUserBasket = false){
         if($isUserBasket) {
-
-            if(count($this->userBaskets) > 1)
-                throw new Exception("only one user basket is allowed, please check your config file");
+            if(count($this->userBaskets) >= Config::getInstance()->user_baskets->amount)
+                throw new BasketManagerFullException();
 
             array_push($this->userBaskets, $basket);
         } else {
+            if (count($this->baskets) >= Config::getInstance()->regular_baskets->amount)
+                throw new BasketManagerFullException();
+
             array_push($this->baskets, $basket);
         }
+    }
+
+    public function getRegularBaskets(){
+        return $this->baskets;
+    }
+
+    public function getUSerBaskets(){
+        return $this->userBaskets;
     }
 
     public function getUserOnlyBaskets($concreteCount = null) {
@@ -57,20 +67,19 @@ class BasketManager
                 $returnBaskets[] = $basket;
             }
         }
-
         return $returnBaskets;
     }
 
-    public function findOnlyOneUserBallBasket(){
+    public function findOnlyOneUserBallBaskets(){
         return $this->getUserOnlyBaskets(1);
     }
 
     private function checkIfBallIsPresentInUserBasket($ball) {
-        $returnValue = true;
+        $returnValue = false;
         foreach ($this->userBaskets as $userBasket) {
             if ($userBasket->isBallPresent($ball)) {
-                $returnValue = false;
-                continue;
+                $returnValue = true;
+                break;
             }
         }
         return $returnValue;

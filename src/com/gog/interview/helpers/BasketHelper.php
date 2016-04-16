@@ -8,6 +8,7 @@ namespace gog;
  */
 class BasketHelper
 {
+
     public static function buildRegularBasket($size, $minNumber, $maxNumber){
 
         $fill = rand(1, $size);
@@ -19,7 +20,6 @@ class BasketHelper
         }
 
         return $basket;
-
     }
 
 
@@ -34,7 +34,33 @@ class BasketHelper
         }
 
         return $basket;
+    }
 
+    public static function renderUserBaskets(){
+        $regularBasketIndex = 0;
+
+        foreach(BasketManager::getInstance()->getUserBaskets() as $basket) {
+            echo " <h3> USER BASKET #: " . $regularBasketIndex . "</h3>" . "\n";
+            self::renderBasket($basket);
+            $regularBasketIndex++;
+        }
+    }
+
+    public static function renderRegularBaskets(){
+        $regularBasketIndex = 0;
+
+        foreach(BasketManager::getInstance()->getRegularBaskets() as $basket) {
+            echo " <h3> REGULAR BASKET #: " . $regularBasketIndex . "</h3>" . "\n";
+            self::renderBasket($basket);
+            $regularBasketIndex++;
+        }
+    }
+
+    public static function renderBasket(Basket $basket) {
+        echo "Balls <br />";
+        foreach($basket->getBalls() as $ball) {
+            echo " # " . $ball->getNumber();
+        }
     }
 
     private static function getNewBall($minNumber, $maxNumber, Basket $basket) {
@@ -46,4 +72,5 @@ class BasketHelper
 
         return $returnBall;
     }
+
 }

@@ -6,19 +6,14 @@ namespace gog;
  * Date: 4/14/16
  * Time: 7:34 PM
  */
-class UserBasket extends Basket implements IBasket
+class UserBasket extends Basket
 {
 
     public function put(Ball $ball)
     {
         if ($this->checkForFill())
-            throw new Exception("UserBasket is fill, you shouldn't try to add a new ball.");
+            throw new BasketFullException(get_class($this));
 
         array_push($this->balls, $ball);
-    }
-
-    public function getUserBallsAmount()
-    {
-        return count($this->balls);
     }
 }

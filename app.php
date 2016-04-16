@@ -2,52 +2,63 @@
 require_once 'vendor/autoload.php';
 
 use gog\BasketManager;
+use gog\LoadAppService;
 use gog\BasketHelper;
-
-/**
- * Created by PhpStorm.
- * User: guido
- * Date: 4/14/16
- * Time: 7:21 PM
- */
-
 
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
-//read config file
-$config = parse_ini_file('config.ini', true);
+$loadAppService = new LoadAppService();
+$loadAppService->init();
+$bm = BasketManager::getInstance();
 
-$minNumber = $config['numbers']['min'];
-$maxNumber = $config['numbers']['max'];
+//POINT B
+$userOnlyBaskets = $bm->getUserOnlyBaskets();
 
+//POINT C
+$userOnlyOneBallBaskets = $bm->findOnlyOneUserBallBaskets();
 
-//initialize app
+?>
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>gog.com interview</title>
+</head>
+<body>
+    <p>
+        Regular baskets amount: <?= count($bm->getRegularBaskets()) ?> <br />
+        User baskets amount: <?= count($bm->getUserBaskets()) ?> <br />
+        Basket indexes with only balls owned by the user: <?php
+        if (count($userOnlyBaskets) > 0) {
+            foreach($userOnlyBaskets as $userOnlyBasket) {
+                echo "# " . $userOnlyBasket->getIndex();
+            }
+        } else {
+            echo "none";
+        }
+        ?> <br />
 
-// REGULAR BASKETS
-$regularBaskets = (int) $config['regular_baskets']['amount'];
-$regularMaxSize = $config['regular_baskets']['size'];
+        Basket indexes with only ONE ball owned by the user: <?php
+        if (count($userOnlyOneBallBaskets) > 0) {
+            foreach($userOnlyOneBallBaskets as $userOnlyOneBasket) {
+                echo " #" . $userOnlyOneBasket->getIndex();
+            }
+        } else {
+            echo "none";
+        }
+        ?> <br />
+    </p>
+    <div style="width: 100%">
+        <h2>User baskets:</h2>
+        <?php BasketHelper::renderUserBaskets() ?>
+    </div>
+    <div style="width:100%; ">
 
-for($i = 0; $i<$regularBaskets; $i++) {
-    $regularBasket = BasketHelper::buildRegularBasket($regularMaxSize, $minNumber, $maxNumber);
-    BasketManager::getInstance()->addBasket($regularBasket);
-}
-
-//USER BASKETS
-$userBaskets = (int) $config['user_baskets']['amount'];
-$userMaxSize = $config['user_baskets']['size'];
-
-for($k = 0; $k<$userBaskets; $k++) {
-    $userBasket = BasketHelper::buildUserBasket($userMaxSize, $minNumber, $maxNumber);
-    BasketManager::getInstance()->addBasket($userBasket, true);
-}
-
-$userOnlyBaskets = BasketManager::getInstance()->getUserOnlyBaskets();
-var_dump(count($userOnlyBaskets));
-
-$userOnlyOneBallBaskets = BasketManager::getInstance()->findOnlyOneUserBallBasket();
-var_dump(count($userOnlyOneBallBaskets));
-
-
+        <h2>Regular baskets:</h2>
+        <?php BasketHelper::renderRegularBaskets() ?>
+    </div>
+</body>
+</html>
 

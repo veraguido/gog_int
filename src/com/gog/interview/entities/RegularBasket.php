@@ -7,7 +7,9 @@ namespace gog;
  * Time: 7:33 PM
  */
 
-class RegularBasket extends Basket implements IBasket
+use BasketFullException;
+
+class RegularBasket extends Basket
 {
     private $size;
 
@@ -17,25 +19,10 @@ class RegularBasket extends Basket implements IBasket
 
     public function put(Ball $ball)
     {
+        if ($this->checkForFill())
+            throw new BasketFullException(get_class($this));
+
         array_push($this->balls, $ball);
-    }
-
-    /*public function isBallPresent(Ball $ball)
-    {
-        $returnValue = false;
-        foreach ($this->balls as $addedBall) {
-            if ($addedBall->getNumber() == $ball->getNumber()){
-                $returnValue = true;
-                break;
-            }
-        }
-
-        return $returnValue;
-    }*/
-
-    public function getUserBallsAmount()
-    {
-        return count($this->balls);
     }
 
     public function getSize()

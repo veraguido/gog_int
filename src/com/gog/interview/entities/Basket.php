@@ -10,6 +10,7 @@ abstract class Basket
 {
     private $size;
     private $amountToFill;
+    private $index;
 
     protected $balls = array();
 
@@ -18,10 +19,15 @@ abstract class Basket
         $this->amountToFill = $amountToFill;
     }
 
+    /**
+     * @param Ball $ball
+     * @return void or exception
+     */
+    abstract function put(Ball $ball);
+
     public function getAmount(){
         return $this->amountToFill;
     }
-
 
     public function getSize(){
         return $this->size;
@@ -31,7 +37,6 @@ abstract class Basket
         $returnValue = false;
         foreach ($this->balls as $addedBall) {
             if ($addedBall->getNumber() == $ball->getNumber()){
-
                 $returnValue = true;
                 break;
             }
@@ -46,6 +51,14 @@ abstract class Basket
 
     public function getBalls() {
         return $this->balls;
+    }
+
+    public function getIndex() {
+        return $this->index;
+    }
+
+    public function setIndex($index) {
+        $this->index = $index;
     }
 
 }
