@@ -10,3 +10,9 @@ The code corresponds to the gog interview.
 Please download the code forking the repository or downloading zip file.
 
 You will find the Class diagram attached in the root folder.
+
+Please before using the application run the following commands:
+
+composer install
+
+composer dump-autoload -o 
