@@ -12,6 +12,11 @@ class Ball
 
 
     public function __construct($number) {
+
+        if(!($number >= Config::getInstance()->numbers->min && $number <= Config::getInstance()->numbers->max)){
+            throw new InvalidBallNumberException();
+        }
+
         $this->number = $number;
     }
 

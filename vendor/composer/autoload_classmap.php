@@ -452,6 +452,7 @@ return array(
     'gog\\BasketManager' => $baseDir . '/src/com/gog/interview/manager/BasketManager.php',
     'gog\\BasketManagerFullException' => $baseDir . '/src/com/gog/interview/exceptions/BasketManagerFullException.php',
     'gog\\Config' => $baseDir . '/src/com/gog/interview/config/Config.php',
+    'gog\\InvalidBallNumberException' => $baseDir . '/src/com/gog/interview/exceptions/InvalidBallNumberException.php',
     'gog\\LoadAppService' => $baseDir . '/src/com/gog/interview/services/LoadAppService.php',
     'gog\\RegularBasket' => $baseDir . '/src/com/gog/interview/entities/RegularBasket.php',
     'gog\\UserBasket' => $baseDir . '/src/com/gog/interview/entities/UserBasket.php',

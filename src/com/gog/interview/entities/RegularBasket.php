@@ -7,7 +7,7 @@ namespace gog;
  * Time: 7:33 PM
  */
 
-use BasketFullException;
+use gog\BasketFullException;
 
 class RegularBasket extends Basket
 {

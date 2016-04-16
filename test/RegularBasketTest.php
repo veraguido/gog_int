@@ -18,4 +18,15 @@ class RegularBasketTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(count($regularBasket->getBalls()), 2);
 
     }
+
+    /**
+     * @expectedException gog\BasketFullException
+     */
+    public function testException(){
+        $regularBasket = new RegularBasket(3, 2);
+        $regularBasket->put(new Ball(1));
+        $regularBasket->put(new Ball(2));
+        $regularBasket->put(new Ball(3));
+
+    }
 }

@@ -8,17 +8,21 @@ use gog\BasketHelper;
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
+$errorMessage = null;
 
-$loadAppService = new LoadAppService();
-$loadAppService->init();
-$bm = BasketManager::getInstance();
+try {
+    $loadAppService = new LoadAppService();
+    $loadAppService->init();
+    $bm = BasketManager::getInstance();
 
-//POINT B
-$userOnlyBaskets = $bm->getUserOnlyBaskets();
+    //POINT B
+    $userOnlyBaskets = $bm->getUserOnlyBaskets();
 
-//POINT C
-$userOnlyOneBallBaskets = $bm->findOnlyOneUserBallBaskets();
-
+    //POINT C
+    $userOnlyOneBallBaskets = $bm->findOnlyOneUserBallBaskets();
+}catch (Exception $e){
+    $errorMessage = $e->getMessage();
+}
 ?>
 <!doctype html>
 <html lang="en">
@@ -27,6 +31,9 @@ $userOnlyOneBallBaskets = $bm->findOnlyOneUserBallBaskets();
     <title>gog.com interview</title>
 </head>
 <body>
+    <?php if (isset($errorMessage)) {?>
+    <b>Error message: <?= $errorMessage ?></b>
+    <?php die; } ?>
     <p>
         Regular baskets amount: <?= count($bm->getRegularBaskets()) ?> <br />
         User baskets amount: <?= count($bm->getUserBaskets()) ?> <br />
