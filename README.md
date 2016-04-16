@@ -5,7 +5,7 @@ The code corresponds to the gog interview.
   - composer should be installed
   - phpunit should be installed (version used is 4.2.*)
   - PHP version used for this application was: PHP 5.5.9-1ubuntu4.14
-  - to run the application run app.php located in the root folder
+  - to run the application browse to app.php located in the root folder
 
 Please download the code forking the repository or downloading zip file.
 
