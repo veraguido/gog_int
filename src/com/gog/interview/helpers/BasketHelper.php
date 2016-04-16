@@ -63,6 +63,16 @@ class BasketHelper
         }
     }
 
+    public static function renderSpecificBaskets($baskets) {
+        if (count($baskets) > 0) {
+            foreach($baskets as $basket) {
+                echo "# " . $basket->getIndex();
+            }
+        } else {
+            echo "none";
+        }
+    }
+
     private static function getNewBall($minNumber, $maxNumber, Basket $basket) {
 
         $returnBall = new Ball(rand($minNumber, $maxNumber));

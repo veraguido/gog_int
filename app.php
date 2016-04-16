@@ -37,25 +37,8 @@ try {
     <p>
         Regular baskets amount: <?= count($bm->getRegularBaskets()) ?> <br />
         User baskets amount: <?= count($bm->getUserBaskets()) ?> <br />
-        Basket indexes with only balls owned by the user: <?php
-        if (count($userOnlyBaskets) > 0) {
-            foreach($userOnlyBaskets as $userOnlyBasket) {
-                echo "# " . $userOnlyBasket->getIndex();
-            }
-        } else {
-            echo "none";
-        }
-        ?> <br />
-
-        Basket indexes with only ONE ball owned by the user: <?php
-        if (count($userOnlyOneBallBaskets) > 0) {
-            foreach($userOnlyOneBallBaskets as $userOnlyOneBasket) {
-                echo " #" . $userOnlyOneBasket->getIndex();
-            }
-        } else {
-            echo "none";
-        }
-        ?> <br />
+        Basket indexes with only balls owned by the user: <?php BasketHelper::renderSpecificBaskets($userOnlyBaskets); ?> <br />
+        Basket indexes with only ONE ball owned by the user: <?php BasketHelper::renderSpecificBaskets($userOnlyOneBallBaskets); ?> <br />
     </p>
     <div style="width: 100%">
         <h2>User baskets:</h2>
