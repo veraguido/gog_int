@@ -11,8 +11,6 @@ use BasketFullException;
 
 class RegularBasket extends Basket
 {
-    private $size;
-
     public function __construct($size, $amount) {
         parent::__construct($size, $amount);
     }
@@ -25,8 +23,4 @@ class RegularBasket extends Basket
         array_push($this->balls, $ball);
     }
 
-    public function getSize()
-    {
-        return $this->size;
-    }
 }
